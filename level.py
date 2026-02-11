@@ -5,7 +5,6 @@ from player import Player
 
 class Level:
     def __init__(self):
-        
         #Get display surface
         self.display_surface = pygame.display.get_surface()
 
@@ -23,6 +22,8 @@ class Level:
                 y = row_index * TILESIZE
                 if col == 'x':
                     Tile((x,y),[self.visible_sprites])
+                if col == 'p':
+                    Player((x,y),[self.visible_sprites])
 
     def run(self):
         #update and draw game
