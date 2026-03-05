@@ -7,3 +7,4 @@ class Tile(pygame.sprite.Sprite):
         self.image = pygame.image.load('assets/grass.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
         self.obstacle_sprites = obstacle_sprites
+        self.obstacle_sprites.add(self)
