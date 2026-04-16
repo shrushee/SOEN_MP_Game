@@ -18,11 +18,11 @@ class Level:
         self.create_map()
 
     def create_map(self):
-        layout = {
+        self.layout = {
                 'boundary': import_csv_layout('assets/tiles/qhhs map_buildings.csv')
         }
 
-    for style,layout in layout.items():
+    for style,layout in self.layout.items():
         for row_index,row in enumerate(layout):
             for col_index, col in enumerate(row): 
                 if col != '-1':
