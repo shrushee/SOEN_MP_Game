@@ -10,7 +10,7 @@ class Game:
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('QHHS')
-        self.clock = pygame.time.Clock()
+        self.clock = pygame.time.Clock() 
 
         self.level = Level()
 
