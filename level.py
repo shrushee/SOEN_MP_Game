@@ -22,7 +22,7 @@ class Level:
                 'boundary': import_csv_layout('assets/tiles/qhhs map_buildings.csv')
         }
 
-    for style,layout in self.layout.items():
+    for style, layout in layout.items():
         for row_index,row in enumerate(layout):
             for col_index, col in enumerate(row): 
                 if col != '-1':
