@@ -18,14 +18,48 @@ class Level:
         self.create_map()
 
     def create_map(self):
-        for row_index,row in enumerate(WORLD_MAP):
-            for col_index, col in enumerate(row):
-                x = col_index * TILESIZE
-                y = row_index * TILESIZE
-                if col == 'x':
-                    Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'obstacle')
-                if col == 'p':
-                    self.player = Player((x, y), [self.visible_sprites], self.obstacle_sprites)
+        layouts = {
+            'buildings': import_csv_layout('assets/tiles/qhhs map_buildings.csv'),
+            'rail1': import_csv_layout('assets/tiles/qhhs map_railing layer.csv'),
+            'rail2': import_csv_layout('assets/tiles/qhhs map_rail layer 2.csv'),
+            'shadow1': import_csv_layout('assets/tiles/qhhs map_Tile Layer 3.csv'),
+            'shadow2': import_csv_layout('assets/tiles/qhhs map_Tile Layer 5.csv'),
+            'shadow3': import_csv_layout('assets/tiles/qhhs map_Tile Layer 6.csv')
+        }
+        graphics = {
+            'buildings': import_folder('assets/buildings'),
+            'railing': import_folder('assets/railing'),
+            'shadow': import_folder('assets/shadows')
+        }
+
+        for style,layout in layouts.items():
+            for row_index,row in enumerate(WORLD_MAP):
+                for col_index, col in enumerate(row):
+                    if col != '-1':
+                        x = col_index * TILESIZE
+                        y = row_index * TILESIZE
+                        if style == 'buildings':
+                            surf = graphics['buildings'][int(col)]
+                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'obstacle', surf)
+                        if style == 'rail1':
+                            #create the first railing tile
+                            pass
+                        if style == 'rail2':
+                            #create the second railing tile
+                            pass
+                        if style == 'shadow1':
+                            #create the first shadow tile
+                            pass
+                        if style == 'shadow2':
+                            #create the second shadow tile
+                            pass
+                        if style == 'shadow3':
+                            #create the third shadow tile
+                            pass
+                        #if col == 'x':
+                            #Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'obstacle')
+                        #if col == 'p':
+        self.player = Player((2000, 2000), [self.visible_sprites], self.obstacle_sprites)
 
     def run(self):
         #update and draw game
