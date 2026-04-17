@@ -23,9 +23,6 @@ class Level:
             'buildings': import_csv_layout('assets/tiles/qhhs map_buildings.csv'),
             'rail1': import_csv_layout('assets/tiles/qhhs map_railing layer.csv'),
             'rail2': import_csv_layout('assets/tiles/qhhs map_rail layer 2.csv'),
-            'shadow1': import_csv_layout('assets/tiles/qhhs map_Tile Layer 3.csv'),
-            'shadow2': import_csv_layout('assets/tiles/qhhs map_Tile Layer 5.csv'),
-            'shadow3': import_csv_layout('assets/tiles/qhhs map_Tile Layer 6.csv')
         }
 
         for style,layout in layouts.items():
