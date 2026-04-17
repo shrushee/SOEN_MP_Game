@@ -33,8 +33,8 @@ class Level:
                         y = row_index * TILESIZE
                         if style == 'boundary':
                             Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'invisible')
-                        if style == 'buildings':
-                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'obstacle')
+                        #if style == 'buildings':
+                        #    Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'obstacle')
                         if style == 'rail1':
                             #create the first railing tile
                             pass
