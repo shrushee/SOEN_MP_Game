@@ -19,6 +19,7 @@ class Level:
 
     def create_map(self):
         layouts = {
+            'boundary': import_csv_layout('assets/tiles/qhhs map_boundary.csv'),
             'buildings': import_csv_layout('assets/tiles/qhhs map_buildings.csv'),
             'rail1': import_csv_layout('assets/tiles/qhhs map_railing layer.csv'),
             'rail2': import_csv_layout('assets/tiles/qhhs map_rail layer 2.csv'),
@@ -33,8 +34,10 @@ class Level:
                     if col != '-1':
                         x = col_index * TILESIZE
                         y = row_index * TILESIZE
-                        if style == 'buildings':
+                        if style == 'boundary':
                             Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'invisible')
+                        if style == 'buildings':
+                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'obstacle')
                         if style == 'rail1':
                             #create the first railing tile
                             pass
@@ -74,6 +77,7 @@ class YSortCameraGroup(pygame.sprite.Group):
         # creating the floor
         self.floor_surf = pygame.image.load('assets/qhhs map.png').convert()
         self.floor_rect = self.floor_surf.get_rect(topleft = (0,0))
+
 
     def custom_draw(self, player):
 
