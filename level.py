@@ -26,11 +26,6 @@ class Level:
             'shadow2': import_csv_layout('assets/tiles/qhhs map_Tile Layer 5.csv'),
             'shadow3': import_csv_layout('assets/tiles/qhhs map_Tile Layer 6.csv')
         }
-        graphics = {
-            'buildings': import_folder('assets/buildings'),
-            'railing': import_folder('assets/railing'),
-            'shadow': import_folder('assets/shadows')
-        }
 
         for style,layout in layouts.items():
             for row_index,row in enumerate(layout):
@@ -39,8 +34,7 @@ class Level:
                         x = col_index * TILESIZE
                         y = row_index * TILESIZE
                         if style == 'buildings':
-                            surf = graphics['buildings'][int(col)]
-                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'obstacle', surf)
+                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'invisible')
                         if style == 'rail1':
                             #create the first railing tile
                             pass
