@@ -5,11 +5,22 @@ import pygame
 """Import functions to read csv files and import folders of images"""
 def import_csv_layout(path):
     terrain_map = []
+    FLIP_FLAGS = 0xE0000000  # mask for Tiled flip bits
+
     with open(path) as level_map:
-        layout = reader(level_map, delimiter = ',')
+        layout = reader(level_map, delimiter=',')
         for row in layout:
-            terrain_map.append(list(row))
-        return terrain_map
+            cleaned_row = []
+            for cell in row:
+                gid = int(cell)
+
+                # Remove Tiled flip flags
+                tile_id = gid & ~FLIP_FLAGS
+
+                cleaned_row.append(tile_id)
+            terrain_map.append(cleaned_row)
+
+    return terrain_map
 
 def import_folder(path):
     surface_list = []
