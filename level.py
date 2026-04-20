@@ -19,16 +19,16 @@ class Level:
 
     def create_map(self):
         layouts = {
-            'boundary': import_csv_layout('assets/tiles/qhhs map_boundary.csv'),
-            'buildings': import_csv_layout('assets/tiles/qhhs map_buildings.csv'),
-            'rail1': import_csv_layout('assets/tiles/qhhs map_railing layer.csv'),
-            'rail2': import_csv_layout('assets/tiles/qhhs map_rail layer 2.csv'),
+            'boundary': import_csv_layout('../assets/tiles/qhhs map_boundary.csv'),
+            'buildings': import_csv_layout('../assets/tiles/qhhs map_buildings.csv'),
+            'rail1': import_csv_layout('../assets/tiles/qhhs map_railing layer.csv'),
+            'rail2': import_csv_layout('../assets/tiles/qhhs map_rail layer 2.csv'),
         }
 
         for style,layout in layouts.items():
             for row_index,row in enumerate(layout):
                 for col_index, col in enumerate(row):
-                    if col != '-1':
+                    if col != -1:
                         x = col_index * TILESIZE
                         y = row_index * TILESIZE
                         if style == 'boundary':
