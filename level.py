@@ -32,13 +32,15 @@ class Level:
                         x = col_index * TILESIZE
                         y = row_index * TILESIZE
                         if style == 'boundary':
-                            Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'invisible')
+                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'invisible')
                         if style == 'buildings':
-                            Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'obstacle')
+                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'obstacle')
                         if style == 'rail1':
-                            Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'obstacle')
+                            #create the first railing tile
+                            pass
                         if style == 'rail2':
-                            Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'obstacle')
+                            #create the second railing tile
+                            pass
                         if style == 'shadow1':
                             #create the first shadow tile
                             pass
