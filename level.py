@@ -17,13 +17,12 @@ class Level:
         #Sprite setup
         self.create_map()
 
-    """Draws a layout for collisions"""
     def create_map(self):
         layouts = {
-            'boundary': import_csv_layout('../assets/tiles/qhhs map_boundary.csv'),
-            'buildings': import_csv_layout('../assets/tiles/qhhs map_buildings.csv'),
-            'rail1': import_csv_layout('../assets/tiles/qhhs map_railing layer.csv'),
-            'rail2': import_csv_layout('../assets/tiles/qhhs map_rail layer 2.csv'),
+            'boundary': import_csv_layout('assets/tiles/qhhs map_boundary.csv'),
+            'buildings': import_csv_layout('assets/tiles/qhhs map_buildings.csv'),
+            'rail1': import_csv_layout('assets/tiles/qhhs map_railing layer.csv'),
+            'rail2': import_csv_layout('assets/tiles/qhhs map_rail layer 2.csv'),
         }
 
         for style,layout in layouts.items():
@@ -33,9 +32,9 @@ class Level:
                         x = col_index * TILESIZE
                         y = row_index * TILESIZE
                         if style == 'boundary':
-                            Tile((x,y),[self.visible_sprites], self.obstacle_sprites, 'invisible')
+                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'invisible')
                         if style == 'buildings':
-                            Tile((x,y),[self.visible_sprites], self.obstacle_sprites, 'obstacle')
+                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'obstacle')
                         if style == 'rail1':
                             #create the first railing tile
                             pass
