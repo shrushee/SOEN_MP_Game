@@ -20,7 +20,7 @@ def import_csv_layout(path):
                 else:
                     tile_id = gid & ~FLIP_FLAGS
                     cleaned_row.append(tile_id)
-                terrain_map.append(cleaned_row)
+        terrain_map.append(cleaned_row)
 
     return terrain_map
 
