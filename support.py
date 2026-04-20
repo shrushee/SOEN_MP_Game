@@ -15,10 +15,12 @@ def import_csv_layout(path):
                 gid = int(cell)
 
                 # Remove Tiled flip flags
-                tile_id = gid & ~FLIP_FLAGS
-
-                cleaned_row.append(tile_id)
-            terrain_map.append(cleaned_row)
+                if gid == -1:
+                    cleaned_row.append(-1)  # No tile
+                else:
+                    tile_id = gid & ~FLIP_FLAGS
+                    cleaned_row.append(tile_id)
+                terrain_map.append(cleaned_row)
 
     return terrain_map
 
