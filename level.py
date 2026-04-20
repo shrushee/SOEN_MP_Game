@@ -35,10 +35,10 @@ class Level:
                             Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'invisible')
                         if style == 'buildings':
                             Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'obstacle')
-                        if style == 'rail1':
-                            Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'invisible')
-                        if style == 'rail2':
-                            Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'invisible')
+                        #if style == 'rail1':
+                            #Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'invisible')
+                        #if style == 'rail2':
+                            #Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'invisible')
                         if style == 'shadow1':
                             #create the first shadow tile
                             pass
