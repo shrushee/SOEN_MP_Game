@@ -35,28 +35,13 @@ class Level:
                             Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'invisible')
                         if style == 'buildings':
                             Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'obstacle')
-                        #if style == 'rail1':
-                            #Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'invisible')
-                        #if style == 'rail2':
-                            #Tile((x,y),[self.obstacle_sprites], self.obstacle_sprites, 'invisible')
-                        if style == 'shadow1':
-                            #create the first shadow tile
-                            pass
-                        if style == 'shadow2':
-                            #create the second shadow tile
-                            pass
-                        if style == 'shadow3':
-                            #create the third shadow tile
-                            pass
-                        #if col == 'x':
-                            #Tile((x,y),[self.visible_sprites,self.obstacle_sprites], self.obstacle_sprites, 'obstacle')
-                        #if col == 'p':
         self.player = Player((2000, 1350), [self.visible_sprites], self.obstacle_sprites)
 
     def run(self):
         #update and draw game
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
+        debug(self.player.status)
 
 
 class YSortCameraGroup(pygame.sprite.Group):
