@@ -5,7 +5,7 @@ from support import import_folder
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, obstacle_sprites):
         super().__init__(groups)
-        self.image = pygame.image.load('assets/PlayerSprites/down_idle/0.png').convert_alpha()
+        self.image = pygame.image.load('assets/PlayerSprites/down_idle.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
         self.hitbox = self.rect.inflate(0,-26)
 
@@ -29,7 +29,7 @@ class Player(pygame.sprite.Sprite):
             'up_idle': [], 'down_idle': [], 'left_idle': [], 'right_idle': []}
         
         for animation in self.animations.keys():
-            full_path = character_path + animation
+            full_path = character_path + '/' + animation
             self.animations[animation] = import_folder(full_path)
 
     def input(self):
