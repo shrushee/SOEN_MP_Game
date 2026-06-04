@@ -2,7 +2,7 @@ import pygame
 from settings import *
 from support import import_folder
 
-class Player(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite): 
     def __init__(self, pos, groups, obstacle_sprites):
         super().__init__(groups)
         self.image = pygame.image.load('assets/PlayerSprites/down_idle.png').convert_alpha()
@@ -66,6 +66,18 @@ class Player(pygame.sprite.Sprite):
         if self.direction.x == 0 and self.direction.y == 0:
             if not 'idle' in self.status:
                 self.status = self.status + '_idle'
+
+        if self.interaction:
+            self.direction.x = 0
+            self.direction.y = 0
+            if not 'interact' in self.status:
+                if 'idle' in self.status:
+                    self.status = self.status.replace('_idle', '_interact')
+                else:
+                    self.status = self.status + '_interact'
+        else:
+            if 'interact' in self.status:
+                self.status = self.status.replace('_interact', '')
 
     def move(self, speed):
         if self.direction.magnitude() != 0:
