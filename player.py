@@ -5,7 +5,7 @@ from support import import_folder
 class Player(pygame.sprite.Sprite): 
     def __init__(self, pos, groups, obstacle_sprites):
         super().__init__(groups)
-        self.image = pygame.image.load('assets/PlayerSprites/down_idle.png').convert_alpha()
+        self.image = pygame.image.load('assets/PlayerSprites/down_idle/0.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
         self.hitbox = self.rect.inflate(0,-26)
 
@@ -114,6 +114,9 @@ class Player(pygame.sprite.Sprite):
 
     def animate(self):
         animation = self.animations[self.status]
+
+        if not animation:
+            return
 
         #loop over frame index
         self.frame_index += self.animation_speed
