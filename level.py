@@ -6,7 +6,9 @@ from debug import debug
 from support import *
 
 class Level:
-    def __init__(self):
+    def __init__(self, game):
+        self.game = game
+       
         #Get display surface
         self.display_surface = pygame.display.get_surface()
 
@@ -14,8 +16,22 @@ class Level:
         self.visible_sprites = YSortCameraGroup()
         self.obstacle_sprites = pygame.sprite.Group()
     
+        #Creating minigame zones
+        self.minigame_zones = []
+        self.create_minigame_zones()
+
         #Sprite setup
         self.create_map()
+
+    def create_minigame_zones(self):
+        minigame_zone1 = pygame.Rect(1300, 1100, 200, 200)
+        self.minigame_zones.append(('minigame1', minigame_zone1))
+
+    def check_minigame_triggers(self):
+        player_rect = self.player.rect
+        for minigame_name, zone in self.minigame_zones:
+            if player_rect.colliderect(zone):
+                self.game.state = minigame_name
 
     def create_map(self):
         layouts = {
@@ -41,6 +57,7 @@ class Level:
         #update and draw game
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
+        self.check_minigame_triggers()
         debug(self.player.status)
 
 
