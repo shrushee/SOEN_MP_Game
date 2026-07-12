@@ -24,7 +24,7 @@ class Level:
         self.create_map()
 
     def create_minigame_zones(self):
-        minigame_zone1 = pygame.Rect(288, 2831, 200, 200)
+        minigame_zone1 = pygame.Rect(288, 2831, 20, 200)
         self.minigame_zones.append(('minigame1', minigame_zone1))
 
     def check_minigame_triggers(self):
