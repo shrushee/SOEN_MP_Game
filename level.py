@@ -59,6 +59,7 @@ class Level:
         self.visible_sprites.update()
         self.check_minigame_triggers()
         debug(self.player.status)
+        debug(f"X: {self.player.rect.x}, Y: {self.player.rect.y}", y=40)
 
 
 class YSortCameraGroup(pygame.sprite.Group):
