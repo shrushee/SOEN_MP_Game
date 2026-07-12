@@ -14,7 +14,7 @@ class Game:
         self.clock = pygame.time.Clock() 
 
         self.state = "overworld"
-        self.level = Level()
+        self.level = Level(self)
 
     def run(self):
         while True:
