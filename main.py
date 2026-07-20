@@ -5,7 +5,8 @@ from debug import debug
 from math_minigame import MathMinigame
 from english_minigame import EnglishMinigame
 from history_minigame import HistoryMinigame
-from geo_minigame import GeoMinigame
+from geo_minigame import GeographyMinigame
+from science_minigame import ScienceMinigame
 
 class Game:
     def __init__(self):
@@ -40,7 +41,10 @@ class Game:
                 HistoryMinigame(self).run()
 
             elif self.state == "minigame4":
-                GeoMinigame(self).run()
+                GeographyMinigame(self).run()
+            
+            elif self.state == "minigame5":
+                ScienceMinigame(self).run()
 
             pygame.display.update()
             self.clock.tick(FPS)

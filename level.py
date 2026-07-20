@@ -44,6 +44,10 @@ class Level:
         minigame_zone4 = pygame.Rect(288, 2195, 10, 300)
         self.minigame_zones.append(("minigame4", minigame_zone4))
 
+        #Science
+        minigame_zone5 = pygame.Rect(512, 1779, 700, 10)
+        self.minigame_zones.append(("minigame5", minigame_zone5))
+
     def check_minigame_triggers(self):
         player_rect = self.player.rect
         keys = pygame.key.get_pressed()
@@ -107,6 +111,8 @@ class Level:
                 prompt_text = "Press SPACE to enter HISTORY"
             elif self.game.state == "minigame4":
                 prompt_text = "Press SPACE to enter GEOGRAPHY"
+            elif self.game.state == "minigame5":
+                prompt_text = "Press SPACE to enter SCIENCE"
             else:
                 prompt_text = "Press SPACE to enter the minigame"
 
