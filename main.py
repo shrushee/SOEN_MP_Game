@@ -3,6 +3,9 @@ from settings import *
 from level import Level
 from debug import debug
 from math_minigame import MathMinigame
+from english_minigame import EnglishMinigame
+from history_minigame import HistoryMinigame
+from geo_minigame import GeoMinigame
 
 class Game:
     def __init__(self):
@@ -15,6 +18,7 @@ class Game:
 
         self.state = "overworld"
         self.level = Level(self)
+        self.minigame_cooldown = False
 
     def run(self):
         while True:
@@ -28,7 +32,16 @@ class Game:
             
             elif self.state == "minigame1":
                 MathMinigame(self).run()
-            
+
+            elif self.state == "minigame2":
+                EnglishMinigame(self).run()
+
+            elif self.state == "minigame3":
+                HistoryMinigame(self).run()
+
+            elif self.state == "minigame4":
+                GeoMinigame(self).run()
+
             pygame.display.update()
             self.clock.tick(FPS)
 

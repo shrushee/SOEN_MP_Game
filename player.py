@@ -19,6 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2()
         self.speed = 3
         self.interaction = False
+        self.interact_object = None
         self.interaction_cooldown = 400
         self.interaction_time = None
         self.obstacle_sprites = obstacle_sprites
@@ -56,6 +57,7 @@ class Player(pygame.sprite.Sprite):
 
         #interaction
         if keys[pygame.K_SPACE] and not self.interaction:
+           if self.interact_object is not None:
             self.interaction = True
             self.interaction_time = pygame.time.get_ticks()
             print('interact')
