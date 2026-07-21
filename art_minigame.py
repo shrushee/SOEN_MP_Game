@@ -34,18 +34,18 @@ class ArtMinigame:
             },
             {
                 "image": "assets/art_silhouettes/palette.png",
-                "options": ["Palette", "Plate", "Shield", "Mask"],
-                "answer": 1
+                "options": ["Shield", "Plate", "Palette", "Mask"],
+                "answer": 3
             },
             {
                 "image": "assets/art_silhouettes/statue.png",
-                "options": ["Statue", "Lamp", "Vase", "Trophy"],
-                "answer": 1
+                "options": ["Trophy", "Lamp", "Vase", "Statue"],
+                "answer": 4
             },
             {
                 "image": "assets/art_silhouettes/vase.png",
-                "options": ["Vase", "Bottle", "Cup", "Jar"],
-                "answer": 1
+                "options": ["Cup", "Bottle", "Vase", "Jar"],
+                "answer": 3
             },
             {
                 "image": "assets/art_silhouettes/guitar.png",
@@ -54,8 +54,8 @@ class ArtMinigame:
             },
             {
                 "image": "assets/art_silhouettes/sonic cameo.png",
-                "options": ["Sonic", "Mario", "Knuckles", "Pikachu"],
-                "answer": 1
+                "options": ["Mario", "Sonic", "Knuckles", "Pikachu"],
+                "answer": 2
             }
         ]
 

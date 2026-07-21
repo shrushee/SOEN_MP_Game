@@ -48,6 +48,14 @@ class Level:
         minigame_zone5 = pygame.Rect(512, 1779, 700, 10)
         self.minigame_zones.append(("minigame5", minigame_zone5))
 
+        #Art
+        minigame_zone6 = pygame.Rect(1472, 627, 800, 10)
+        self.minigame_zones.append(("minigame6", minigame_zone6))
+
+        #Music
+        minigame_zone7 = pygame.Rect(2304, 627, 10, 100)
+        self.minigame_zones.append(("minigame7", minigame_zone7))
+
     def check_minigame_triggers(self):
         player_rect = self.player.rect
         keys = pygame.key.get_pressed()
@@ -76,10 +84,10 @@ class Level:
 
     def create_map(self):
         layouts = {
-            'boundary': import_csv_layout('assets/tiles/qhhs map_boundary.csv'),
-            'buildings': import_csv_layout('assets/tiles/qhhs map_buildings.csv'),
-            'rail1': import_csv_layout('assets/tiles/qhhs map_railing layer.csv'),
-            'rail2': import_csv_layout('assets/tiles/qhhs map_rail layer 2.csv'),
+            'boundary': import_csv_layout('assets/tiles/tiles/qhhs map_boundary.csv'),
+            'buildings': import_csv_layout('assets/tiles//tiles/qhhs map_buildings.csv'),
+            'rail1': import_csv_layout('assets/tiles//tiles/qhhs map_railing layer.csv'),
+            'rail2': import_csv_layout('assets/tiles/tiles/qhhs map_rail layer 2.csv'),
         }
 
         for style,layout in layouts.items():
@@ -113,6 +121,10 @@ class Level:
                 prompt_text = "Press SPACE to enter GEOGRAPHY"
             elif self.game.state == "minigame5":
                 prompt_text = "Press SPACE to enter SCIENCE"
+            elif self.game.state == "minigame6":
+                prompt_text = "Press SPACE to enter ART"
+            elif self.game.state == "minigame7":
+                prompt_text = "Press SPACE to enter MUSIC"
             else:
                 prompt_text = "Press SPACE to enter the minigame"
 

@@ -7,6 +7,8 @@ from english_minigame import EnglishMinigame
 from history_minigame import HistoryMinigame
 from geo_minigame import GeographyMinigame
 from science_minigame import ScienceMinigame
+from art_minigame import ArtMinigame
+from music_minigame import MusicMinigame
 
 class Game:
     def __init__(self):
@@ -45,6 +47,12 @@ class Game:
             
             elif self.state == "minigame5":
                 ScienceMinigame(self).run()
+            
+            elif self.state == "minigame6":
+                ArtMinigame(self).run()
+
+            elif self.state == "minigame7":
+                MusicMinigame(self).run()
 
             pygame.display.update()
             self.clock.tick(FPS)
