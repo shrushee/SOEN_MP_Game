@@ -38,8 +38,19 @@ class Game:
             "minigame6": "minigame6",
             "minigame7": "minigame7"
         }
+
+        self.minigame_subject_map = {
+            "minigame1": "Mathematics",
+            "minigame2": "English",
+            "minigame3": "History",
+            "minigame4": "Geography",
+            "minigame5": "Science",
+            "minigame6": "Art",
+            "minigame7": "Music"
+        }
+
         self.minigames_to_play = random.sample(
-            list(self.minigame_state_map.values()), 5
+            list(self.minigame_state_map.keys()), 5
         )
         self.all_minigames = list(self.minigame_state_map.values())
         self.current_minigame_index = 0
@@ -48,6 +59,7 @@ class Game:
         self.level = Level(self)
         self.total_score = 0
 
+        self.ui_font = pygame.font.Font("assets/fonts/Pixel Game.otf", 40)
 
     def run(self):
         while True:
