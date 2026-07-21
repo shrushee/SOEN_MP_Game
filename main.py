@@ -20,14 +20,14 @@ class Game:
         pygame.display.set_caption('QHHS')
         self.clock = pygame.time.Clock()
 
-        self.state = "overworld"
+        self.state = "title"
         self.minigame_cooldown = False
 
-        self.background = pygame.image.load("assets/chalkboard.jpg").convert()
+        self.background = pygame.image.load("assets/qhhs.png").convert()
         self.background = pygame.transform.scale(self.background, (WIDTH, HEIGHT))
 
-        self.font_big = pygame.font.Font("assets/fonts/Chalk Board.otf", 60)
-        self.font_small = pygame.font.Font("assets/fonts/Chalk Board.otf", 40)
+        self.font_big = pygame.font.Font("assets/fonts/Pixel Game.otf", 95)
+        self.font_small = pygame.font.Font("assets/fonts/Pixel Game.otf", 40)
 
         self.minigame_state_map = {
             "minigame1": "minigame1",
@@ -61,6 +61,47 @@ class Game:
 
         self.ui_font = pygame.font.Font("assets/fonts/Pixel Game.otf", 40)
 
+    def run_title_screen(self):
+        self.screen.blit(self.background, (0, 0))
+
+        #Fade in
+        if not hasattr(self, "title_alpha"):
+            self.title_alpha = 255
+
+        overlay = pygame.Surface((WIDTH, HEIGHT))
+        overlay.fill((0, 0, 0))
+        overlay.set_alpha(self.title_alpha)
+        self.screen.blit(overlay, (0, 0))
+
+        if self.title_alpha > 0:
+            self.title_alpha -= 3
+
+        # Title text
+        title = self.font_big.render("The QUAKERS HILL HIGH SCHOOL Game", True, (255, 255, 255))
+        title_rect = title.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 100))
+
+        # Shadow
+        shadow = self.font_big.render("The QUAKERS HILL HIGH SCHOOL Game", True, (0, 0, 0))
+        shadow_rect = shadow.get_rect(center=(WIDTH // 2 + 3, HEIGHT // 2 - 97))
+
+        self.screen.blit(shadow, shadow_rect)
+        self.screen.blit(title, title_rect)
+
+        # Prompt text
+        prompt = self.font_small.render("Press SPACE to Start", True, (255, 255, 255))
+        prompt_shadow = self.font_small.render("Press SPACE to Start", True, (0, 0, 0))
+
+        prompt_rect = prompt.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
+        prompt_shadow_rect = prompt.get_rect(center=(WIDTH // 2 + 3, HEIGHT // 2 + 53))
+
+        self.screen.blit(prompt_shadow, prompt_shadow_rect)
+        self.screen.blit(prompt, prompt_rect)
+
+        # Input
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE]:
+            self.state = "overworld"
+
     def run(self):
         while True:
             for event in pygame.event.get():
@@ -68,7 +109,10 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
-            if self.state == "overworld":
+            if self.state == "title":
+                self.run_title_screen()
+
+            elif self.state == "overworld":
                 self.run_overworld()
             
             elif self.state == "minigame1":
@@ -136,7 +180,7 @@ class Game:
 
             self.screen.blit(self.background, (0,0))
 
-            title = self.font_big.render("Day Complete! Thanks for playing!", True, (255,255,255))
+            title = self.font_big.render("Day Complete!", True, (255,255,255))
             self.screen.blit(title, (WIDTH//2 - 300, 150))
 
             score_text = self.font_big.render(f"Total Score: {self.total_score}", True, (255, 255, 255))
