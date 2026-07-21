@@ -59,11 +59,24 @@ class MathMinigame:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    sys.exit() 
-                
+                    sys.exit()
+
                 if event.type == pygame.KEYDOWN:
-                    if event.key in (pygame.K_ESCAPE, pygame.K_SPACE, pygame.K_RETURN):
-                        running = False
+                    if event.key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_ESCAPE):
+                        
+                        #Add score to total score and move to next minigame or final results
+                        self.game.total_score += self.score
+
+                        #Advance to next minigame
+                        self.game.current_minigame_index += 1
+
+                        if self.game.current_minigame_index < len(self.game.minigames_to_play):
+                            self.game.current_target_minigame = self.game.minigames_to_play[self.game.current_minigame_index]
+                            self.game.minigame_cooldown = True
+                            self.game.state = "overworld"
+                        else:
+                            self.game.state = "final_results"
+                        return
 
             #background
             self.screen.blit(self.background, (0, 0))
@@ -132,7 +145,6 @@ class MathMinigame:
             if self.state == "results":
                     self.show_results_screen()
                     self.game.minigame_cooldown = True
-                    self.game.state = "overworld"
                     return
         
             #background

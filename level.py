@@ -27,6 +27,9 @@ class Level:
         self.font_prompt = pygame.font.Font("assets/fonts/Pixel Game.otf", 30)
         self.show_prompt = False
 
+        self.arrow_image = pygame.image.load("assets/marker.png").convert_alpha()
+        self.arrow_image = pygame.transform.scale(self.arrow_image, (60, 60))
+
     def create_minigame_zones(self):
         #Maths
         minigame_zone1 = pygame.Rect(288, 2831, 10, 200)
@@ -60,6 +63,13 @@ class Level:
         player_rect = self.player.rect
         keys = pygame.key.get_pressed()
         for minigame_name, zone in self.minigame_zones:
+            mapped = self.game.minigame_state_map[minigame_name]
+            if mapped != self.game.current_target_minigame:
+                continue
+
+            if minigame_name != self.game.current_target_minigame:
+                continue  # Skip zones that are not the current target minigame
+
             if not self.game.minigame_cooldown:  # Check if the cooldown is not active
                 if player_rect.colliderect(zone):
                     self.show_prompt = True
@@ -73,12 +83,7 @@ class Level:
             else:
                 self.show_prompt = False  # Hide the prompt if the cooldown is active
 
-                in_any_zone = False
-                for _, zone in self.minigame_zones:
-                    if player_rect.colliderect(zone):
-                        in_any_zone = True
-                        break
-
+                in_any_zone = any(player_rect.colliderect(zone) for _, zone in self.minigame_zones)
                 if not in_any_zone:
                     self.game.minigame_cooldown = False  # Reset the cooldown when the player leaves the zone
 
@@ -107,26 +112,13 @@ class Level:
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
         self.check_minigame_triggers()
+        self.draw_navigation_arrow()
         debug(self.player.status)
         debug(f"X: {self.player.rect.x}, Y: {self.player.rect.y}", y=40)
+        
 
-        if self.show_prompt and self.active_minigame_zone:
-            if self.game.state == "minigame1":
-                prompt_text = "Press SPACE to enter MATHEMATICS"
-            elif self.game.state == "minigame2":
-                prompt_text = "Press SPACE to enter ENGLISH"
-            elif self.game.state == "minigame3":
-                prompt_text = "Press SPACE to enter HISTORY"
-            elif self.game.state == "minigame4":
-                prompt_text = "Press SPACE to enter GEOGRAPHY"
-            elif self.game.state == "minigame5":
-                prompt_text = "Press SPACE to enter SCIENCE"
-            elif self.game.state == "minigame6":
-                prompt_text = "Press SPACE to enter ART"
-            elif self.game.state == "minigame7":
-                prompt_text = "Press SPACE to enter MUSIC"
-            else:
-                prompt_text = "Press SPACE to enter the minigame"
+        if self.show_prompt and self.active_minigame_zone == self.game.current_target_minigame:
+            prompt_text = f"Press SPACE to start {self.game.current_target_minigame.replace('_', ' ').upper()}!"
 
             prompt_surf = self.font_prompt.render(prompt_text, True, (255, 255, 255))
             prompt_bg = pygame.Surface((prompt_surf.get_width() + 20, prompt_surf.get_height() + 20))
@@ -139,6 +131,26 @@ class Level:
 
             self.display_surface.blit(prompt_bg, (x, y))
             self.display_surface.blit(prompt_surf, (x + 10, y + 10))
+
+    def draw_navigation_arrow(self):
+        player_pos = pygame.math.Vector2(self.player.rect.center)
+
+        target_pos = None
+        for minigame_name, zone in self.minigame_zones:
+            mapped = self.game.minigame_state_map[minigame_name]
+            if mapped == self.game.current_target_minigame:
+                target_pos = pygame.math.Vector2(zone.center)
+                break
+        if target_pos is None:
+            return  # No target position found, exit the function
+
+        direction = target_pos - player_pos
+        angle = direction.angle_to(pygame.math.Vector2(0, -1))  # Angle in degrees
+
+        rotated_arrow = pygame.transform.rotate(self.arrow_image, angle)
+        arrow_rect = rotated_arrow.get_rect(center=(WIDTH // 2, 80))
+
+        self.display_surface.blit(rotated_arrow, arrow_rect)
 
 class YSortCameraGroup(pygame.sprite.Group):
     def __init__(self):
@@ -179,3 +191,5 @@ class YSortCameraGroup(pygame.sprite.Group):
         for sprite in sorted(self.sprites(),key = lambda sprite: sprite.rect.centery):
             offset_pos = sprite.rect.topleft - self.offset
             self.display_surface.blit(sprite.image, offset_pos)
+
+    
