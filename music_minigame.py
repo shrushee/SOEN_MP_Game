@@ -40,7 +40,7 @@ class MusicMinigame:
 
         self.score = 0
         self.question_number = 0
-        self.total_questions = 6
+        self.total_questions = 10
 
         self.feedback = ""
         self.feedback_color = (255,255,255)
@@ -58,7 +58,7 @@ class MusicMinigame:
                 "answer": 1
             },
             {
-                "question": "Which clef is commonly used for higher‑pitched instruments?",
+                "question": "Which clef is commonly used for higher pitched instruments?",
                 "options": ["Bass Clef", "Treble Clef", "Alto Clef", "Tenor Clef"],
                 "answer": 2
             },
@@ -77,6 +77,27 @@ class MusicMinigame:
                 "options": ["Texture", "Dynamics", "Pitch", "Tone Colour"],
                 "answer": 2
             },
+            {
+                "question": "The LINES for Treble Clef consist of what notes?",
+                "options": ["F A C E", "G B D F A", "A C E G", "E G B D F"],
+                "answer": 4
+            },
+            {
+                "question": "How many beats is in a quarter note at 4/4 time signature?",
+                "options": ["1", "2", "3", "4"],
+                "answer": 1
+            },
+            {
+                "question": "What is the symbol '#' called?",
+                "options": ["Meter", "Signature", "Flat", "Sharp"],
+                "answer": 4
+            },
+            {
+                "question": "What is a leitmotif?",
+                "options": ["A motif used in film for story purposes", "A repeated melodic phrase", "A less weighty motif", "The worst musical term"],
+                "answer": 1
+            },
+            
         ]
 
         random.shuffle(self.questions)
@@ -127,13 +148,24 @@ class MusicMinigame:
             self.screen.blit(self.background, (0, 0))
 
             # Draw question
-            q_surf = self.font_big.render(self.current_question["question"], True, (255,255,255))
-            self.screen.blit(q_surf, (50, 100))
+            draw_text_wrapped(
+            self.screen,
+            self.current_question["question"],
+            self.font_big,
+            (255, 255, 255),
+            50,        # x position
+            100,       # y position
+            WIDTH - 100   # max width before wrapping
+        )
 
             # Draw options
             for i, option in enumerate(self.current_question["options"], start=1):
                 opt_surf = self.font_small.render(f"{i}. {option}", True, (255,255,255))
                 self.screen.blit(opt_surf, (70, 200 + i * 50))
+            
+            #draw instructions
+            inst_surf = self.font_small.render("Press 1, 2, 3 or 4 to answer a  Music theory question. Complete 10.", True, (255, 255, 255))
+            self.screen.blit(inst_surf, (20, HEIGHT - 50))
 
             # Draw feedback
             if self.feedback:

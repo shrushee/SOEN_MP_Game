@@ -40,7 +40,7 @@ class GeographyMinigame:
 
         self.score = 0
         self.question_number = 0
-        self.total_questions = 7
+        self.total_questions = 10
 
         self.feedback = ""
         self.feedback_color = (255,255,255)
@@ -82,6 +82,21 @@ class GeographyMinigame:
                 "question": "What is the largest island in the world?",
                 "options": ["Greenland", "New Guinea", "Borneo", "Madagascar"],
                 "answer": 1
+            },
+            {
+                "question": "The lines of longitude are:",
+                "options": ["Horizontal", "Vertical", "Diagonal", "Curved"],
+                "answer": 2
+            },
+            {
+                "question": "Is Australia a continent, country, or island?",
+                "options": ["Continent", "Country", "Island", "All of the above"],
+                "answer": 4
+            },
+            {
+                "question": "What is the name of the supercontinent that existed 200 million years ago?",
+                "options": ["Earth", "Australia", "Pangea", "Mobius"],
+                "answer": 3
             }
         ]
 
@@ -133,13 +148,24 @@ class GeographyMinigame:
             self.screen.blit(self.background, (0, 0))
 
             # Draw question
-            q_surf = self.font_big.render(self.current_question["question"], True, (255,255,255))
-            self.screen.blit(q_surf, (50, 100))
+            draw_text_wrapped(
+            self.screen,
+            self.current_question["question"],
+            self.font_big,
+            (255, 255, 255),
+            50,        # x position
+            100,       # y position
+            WIDTH - 100   # max width before wrapping
+        )
 
             # Draw options
             for i, option in enumerate(self.current_question["options"], start=1):
                 opt_surf = self.font_small.render(f"{i}. {option}", True, (255,255,255))
                 self.screen.blit(opt_surf, (70, 200 + i * 50))
+
+            #draw instructions
+            inst_surf = self.font_small.render("Press 1, 2, 3 or 4 to answer a Geography question. Complete 10.", True, (255, 255, 255))
+            self.screen.blit(inst_surf, (20, HEIGHT - 50))
 
             # Draw feedback
             if self.feedback:

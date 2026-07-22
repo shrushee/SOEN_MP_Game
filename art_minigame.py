@@ -20,7 +20,7 @@ class ArtMinigame:
 
         self.score = 0
         self.question_number = 0
-        self.total_questions = 6
+        self.total_questions = 10
 
         self.feedback = ""
         self.feedback_color = (255,255,255)
@@ -56,7 +56,27 @@ class ArtMinigame:
                 "image": "assets/art_silhouettes/sonic cameo.png",
                 "options": ["Mario", "Sonic", "Knuckles", "Pikachu"],
                 "answer": 2
-            }
+            },
+            {
+                "image": "assets/art_silhouettes/bird.png",
+                "options": ["Alligator", "Eagle", "Ostrich", "Bird"],
+                "answer": 4
+            },
+                        {
+                "image": "assets/art_silhouettes/butterfly.png",
+                "options": ["Caterpillar", "Beetle", "Butterfly", "Moth"],
+                "answer": 3
+            },
+                        {
+                "image": "assets/art_silhouettes/deer.png",
+                "options": ["Moose", "Deer", "Bear", "Rudolph"],
+                "answer": 2
+            },
+                        {
+                "image": "assets/art_silhouettes/elephant.png",
+                "options": ["Lion", "Zebra", "Giraffe", "Elephant"],
+                "answer": 4
+            },
         ]
 
         random.shuffle(self.questions)
@@ -122,6 +142,10 @@ class ArtMinigame:
             for i, option in enumerate(self.current_question["options"], start=1):
                 opt_surf = self.font_small.render(f"{i}. {option}", True, (255,255,255))
                 self.screen.blit(opt_surf, (70, 450 + i * 50))
+
+            #draw instructions
+            inst_surf = self.font_small.render("Press 1, 2, 3 or 4 to guess a silhouette. Complete 10.", True, (255, 255, 255))
+            self.screen.blit(inst_surf, (20, HEIGHT - 50))
 
             # Draw feedback
             if self.feedback:

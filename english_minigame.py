@@ -37,7 +37,7 @@ class EnglishMinigame:
 
         self.score = 0
         self.question_number = 0
-        self.total_questions = 5
+        self.total_questions = 10
 
         self.feedback = ""
         self.feedback_color = (255,255,255)
@@ -56,7 +56,7 @@ class EnglishMinigame:
                 "answer": 2
             },
             {
-                "question": "Which word correctly completes the sentence?\nShe ___ going to the store.",
+                "question": "Which word correctly completes the sentence? She ___ going to the store.",
                 "options": ["is", "are", "were", "be"],
                 "answer": 1
             },
@@ -84,6 +84,56 @@ class EnglishMinigame:
                     "I bought, apples, oranges and bananas."
                 ],
                 "answer": 3
+            },
+            {
+                "question": "Spot the grammatical error!",
+                "options": [
+                    "Wow, you're awesome!",
+                    "Your welcome!",
+                    "You are not very good at this.",
+                    "Your mother is calling you."
+                ],
+                "answer": 2
+            },
+            {
+                "question": "Which of these is a simile?",
+                "options": [
+                    "He was a speeding train.",
+                    "Alan accelerated accordingly.",
+                    "She was a gentle flower floating through the air.",
+                    "He was as aggressive as an overdrive electric guitar."
+                ],
+                "answer": 4
+            },
+            {
+                "question": "Spell the word, 'gullible'!",
+                "options": [
+                    "Gulible",
+                    "Gulibel",
+                    "Gullibell",
+                    "Wait, you already spelled it for me."
+                ],
+                "answer": 4
+            },
+             {
+                "question": "Which of these sentences is a 'hyperbole'?",
+                "options": [
+                    "I was as still as a statue.",
+                    "My teacher is going to kill me!",
+                    "He was an earthworm digging through the ground.",
+                    "Barry blitzed off towards the big bushes."
+                ],
+                "answer": 2
+            },
+             {
+                "question": "Fill in the blank: ___ is this happening?!",
+                "options": [
+                    "Where",
+                    "Why",
+                    "What",
+                    "How"
+                ],
+                "answer": 2
             }
         ]
 
@@ -149,6 +199,10 @@ class EnglishMinigame:
             for i, option in enumerate(self.current_question["options"], start=1):
                 opt_surf = self.font_small.render(f"{i}. {option}", True, (255,255,255))
                 self.screen.blit(opt_surf, (70, 200 + i * 50))
+
+            #draw instructions
+            inst_surf = self.font_small.render("Press 1, 2, 3 or 4 to answer an English question. Complete 10.", True, (255, 255, 255))
+            self.screen.blit(inst_surf, (20, HEIGHT - 50))
 
             # Draw feedback
             if self.feedback:

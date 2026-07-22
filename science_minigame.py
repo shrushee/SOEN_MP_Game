@@ -40,7 +40,7 @@ class ScienceMinigame:
 
         self.score = 0
         self.question_number = 0
-        self.total_questions = 5
+        self.total_questions = 10
 
         self.feedback = ""
         self.feedback_color = (255,255,255)
@@ -71,6 +71,31 @@ class ScienceMinigame:
                 "question": "What is H₂O commonly known as?",
                 "options": ["Salt", "Water", "Sugar", "Oxygen"],
                 "answer": 2
+            },
+            {
+                "question": "What is the first element on the periodic table?",
+                "options": ["Oxygen", "Gold", "Helium", "Hydrogen"],
+                "answer": 4
+            },
+            {
+                "question": "What is Newton's Second Law?",
+                "options": ["Force = Mass x Acceleration", "An object stays in motion or rest unless acted upon by an opposing force.", "Every action has an equal and opposite reaction.", "Law of Universal Gravitation"],
+                "answer": 1
+            },
+            {
+                "question": "Which of these is an independent variable",
+                "options": ["Size of plant", "Temperature", "Amount of water", "Number of leaves"],
+                "answer": 3
+            },
+            {
+                "question": "What is a hypothesis?",
+                "options": ["Your experiment method", "Your prediction", "Tools that will be used", "Your results"],
+                "answer": 2
+            },
+            {
+                "question": "Name the process of liquid turning into gas",
+                "options": ["Condensation", "Liquidation", "Evaporation", "Precipitation"],
+                "answer": 3
             }
         ]
 
@@ -122,13 +147,24 @@ class ScienceMinigame:
             self.screen.blit(self.background, (0, 0))
 
             # Draw question
-            q_surf = self.font_big.render(self.current_question["question"], True, (255,255,255))
-            self.screen.blit(q_surf, (50, 100))
+            draw_text_wrapped(
+            self.screen,
+            self.current_question["question"],
+            self.font_big,
+            (255, 255, 255),
+            50,        # x position
+            100,       # y position
+            WIDTH - 100   # max width before wrapping
+        )
 
             # Draw options
             for i, option in enumerate(self.current_question["options"], start=1):
                 opt_surf = self.font_small.render(f"{i}. {option}", True, (255,255,255))
                 self.screen.blit(opt_surf, (70, 200 + i * 50))
+
+            #draw instructions
+            inst_surf = self.font_small.render("Press 1, 2, 3 or 4 to answer a Science question. Complete 10.", True, (255, 255, 255))
+            self.screen.blit(inst_surf, (20, HEIGHT - 50))
 
             # Draw feedback
             if self.feedback:

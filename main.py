@@ -156,16 +156,16 @@ class Game:
     def show_final_results(self):
         running = True
 
-        if self.total_score >= 40:
-            rank = "S"
-        elif self.total_score >= 30:
+        if self.total_score >= 50:
             rank = "A"
-        elif self.total_score >= 20:
+        elif self.total_score >= 40:
             rank = "B"
-        elif self.total_score >= 10:
+        elif self.total_score >= 30:
             rank = "C"
-        else:
+        elif self.total_score >= 20:
             rank = "D"
+        else:
+            rank = "F"
 
         while running:
             for event in pygame.event.get():

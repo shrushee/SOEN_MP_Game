@@ -40,7 +40,7 @@ class HistoryMinigame:
 
         self.score = 0
         self.question_number = 0
-        self.total_questions = 7
+        self.total_questions = 10
 
         self.feedback = ""
         self.feedback_color = (255,255,255)
@@ -82,6 +82,21 @@ class HistoryMinigame:
                 "question": "Who was the first person to walk on the moon?",
                 "options": ["Yuri Gagarin", "Neil Armstrong", "Buzz Aldrin", "John Glenn"],
                 "answer": 2
+            },
+                        {
+                "question": "Which U.S. President got assassinated in 1963 while riding an open motorcade?",
+                "options": ["George Washington", "George W. Bush", "Bill Clinton", "John F. Kennedy"],
+                "answer": 4
+            },
+            {
+                "question": "Which Italian Renaissance artist made the Mona Lisa?",
+                "options": ["Michelangelo", "Raphael", "Leonardo", "Donnatello"],
+                "answer": 3
+            },
+            {
+                "question": "What two Japanese cities were hit by an atomic bomb at the end of WW2?",
+                "options": ["Hiroshima and Nagasaki", "Tokyo and Hiroshima", "Nagasaki and Osaka", "Kyoto and Tokyo"],
+                "answer": 1
             }
         ]
 
@@ -133,13 +148,25 @@ class HistoryMinigame:
             self.screen.blit(self.background, (0, 0))
 
             # Draw question
-            q_surf = self.font_big.render(self.current_question["question"], True, (255,255,255))
-            self.screen.blit(q_surf, (50, 100))
+            draw_text_wrapped(
+            self.screen,
+            self.current_question["question"],
+            self.font_big,
+            (255, 255, 255),
+            50,        # x position
+            100,       # y position
+            WIDTH - 100   # max width before wrapping
+        )
 
+            
             # Draw options
             for i, option in enumerate(self.current_question["options"], start=1):
                 opt_surf = self.font_small.render(f"{i}. {option}", True, (255,255,255))
                 self.screen.blit(opt_surf, (70, 200 + i * 50))
+
+            #draw instructions
+            inst_surf = self.font_small.render("Press 1, 2, 3 or 4 to answer a History question. Complete 10.", True, (255, 255, 255))
+            self.screen.blit(inst_surf, (20, HEIGHT - 50))
 
             # Draw feedback
             if self.feedback:
