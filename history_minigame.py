@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 import random
 import sys
@@ -30,7 +31,7 @@ class HistoryMinigame:
         self.state = "playing"
 
         # Chalkboard background
-        self.background = pygame.image.load("assets/chalkboard.jpg").convert()
+        self.background = pygame.image.load("assets/chalkboard.png").convert()
         self.background = pygame.transform.scale(self.background, (WIDTH, HEIGHT))
 
         # Chalk font
@@ -63,7 +64,7 @@ class HistoryMinigame:
                 "answer": 3
             },
             {
-                "question": "Who was known as the 'Maid of Orléans'?",
+                "question": "Who was known as the 'Maid of Orleans'?",
                 "options": ["Cleopatra", "Joan of Arc", "Queen Victoria", "Marie Curie"],
                 "answer": 2
             },
@@ -109,7 +110,7 @@ class HistoryMinigame:
         else:
             self.current_question = self.questions[self.question_number]
 
-    def run(self):
+    async def run(self):
         running = True
 
         while running:
@@ -134,7 +135,7 @@ class HistoryMinigame:
                         self.next_question()
 
             if self.state == "results":
-                self.show_results_screen()
+                await self.show_results_screen()
                 self.game.minigame_cooldown = True
                 return
 
@@ -157,7 +158,7 @@ class HistoryMinigame:
             WIDTH - 100   # max width before wrapping
         )
 
-            
+
             # Draw options
             for i, option in enumerate(self.current_question["options"], start=1):
                 opt_surf = self.font_small.render(f"{i}. {option}", True, (255,255,255))
@@ -174,8 +175,9 @@ class HistoryMinigame:
 
             pygame.display.update()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)
 
-    def show_results_screen(self):
+    async def show_results_screen(self):
         running = True
 
         while running:
@@ -186,7 +188,7 @@ class HistoryMinigame:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_ESCAPE):
-                        
+
                         #Add score to total score and move to next minigame or final results
                         self.game.total_score += self.score
 
@@ -214,3 +216,4 @@ class HistoryMinigame:
 
             pygame.display.update()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)

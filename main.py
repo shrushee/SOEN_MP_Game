@@ -1,3 +1,4 @@
+import asyncio
 import pygame, sys
 import random
 from settings import *
@@ -101,7 +102,7 @@ class Game:
         if keys[pygame.K_SPACE]:
             self.state = "overworld"
 
-    def run(self):
+    async def run(self):
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -113,38 +114,39 @@ class Game:
 
             elif self.state == "overworld":
                 self.run_overworld()
-            
+
             elif self.state == "minigame1":
-                MathMinigame(self).run()
+                await MathMinigame(self).run()
 
             elif self.state == "minigame2":
-                EnglishMinigame(self).run()
+                await EnglishMinigame(self).run()
 
             elif self.state == "minigame3":
-                HistoryMinigame(self).run()
+                await HistoryMinigame(self).run()
 
             elif self.state == "minigame4":
-                GeographyMinigame(self).run()
-            
+                await GeographyMinigame(self).run()
+
             elif self.state == "minigame5":
-                ScienceMinigame(self).run()
-            
+                await ScienceMinigame(self).run()
+
             elif self.state == "minigame6":
-                ArtMinigame(self).run()
+                await ArtMinigame(self).run()
 
             elif self.state == "minigame7":
-                MusicMinigame(self).run()
-            
+                await MusicMinigame(self).run()
+
             elif self.state == "final_results":
-                self.show_final_results()
+                await self.show_final_results()
 
             pygame.display.update()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)   # yields to the browser each frame
 
     def run_overworld(self):
         self.screen.fill('black')
         self.level.run()
-    
+
     def run_minigame1(self):
         self.screen.fill((30, 30, 30))
         font = pygame.font.Font(None, 50)
@@ -152,7 +154,7 @@ class Game:
         text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
         self.screen.blit(text, text_rect)
 
-    def show_final_results(self):
+    async def show_final_results(self):
         running = True
 
         if self.total_score >= 50:
@@ -171,7 +173,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                
+
                 if event.type == pygame.KEYDOWN:
                     if event.key in (pygame.K_SPACE, pygame.K_RETURN):
                         self.reset_game()
@@ -193,7 +195,8 @@ class Game:
 
             pygame.display.update()
             self.clock.tick(FPS)
-    
+            await asyncio.sleep(0)   # yields to the browser each frame
+
     def reset_game(self):
         self.total_score = 0
         self.current_minigame_index = 0
@@ -201,6 +204,9 @@ class Game:
         self.current_target_minigame = self.minigames_to_play[0]
         self.state = "overworld"
 
-if __name__ == '__main__':
+async def main():
     game = Game()
-    game.run()
+    await game.run()
+
+if __name__ == '__main__':
+    asyncio.run(main())

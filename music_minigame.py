@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 import random
 import sys
@@ -30,7 +31,7 @@ class MusicMinigame:
         self.state = "playing"
 
         # Chalkboard background
-        self.background = pygame.image.load("assets/chalkboard.jpg").convert()
+        self.background = pygame.image.load("assets/chalkboard.png").convert()
         self.background = pygame.transform.scale(self.background, (WIDTH, HEIGHT))
 
         # Chalk font
@@ -96,7 +97,7 @@ class MusicMinigame:
                 "options": ["A motif used in film for story purposes", "A repeated melodic phrase", "A less weighty motif", "The worst musical term"],
                 "answer": 1
             },
-            
+
         ]
 
         random.shuffle(self.questions)
@@ -109,7 +110,7 @@ class MusicMinigame:
         else:
             self.current_question = self.questions[self.question_number]
 
-    def run(self):
+    async def run(self):
         running = True
 
         while running:
@@ -134,7 +135,7 @@ class MusicMinigame:
                         self.next_question()
 
             if self.state == "results":
-                self.show_results_screen()
+                await self.show_results_screen()
                 self.game.minigame_cooldown = True
                 return
 
@@ -161,7 +162,7 @@ class MusicMinigame:
             for i, option in enumerate(self.current_question["options"], start=1):
                 opt_surf = self.font_small.render(f"{i}. {option}", True, (255,255,255))
                 self.screen.blit(opt_surf, (70, 200 + i * 50))
-            
+
             #draw instructions
             inst_surf = self.font_small.render("Press 1, 2, 3 or 4 to answer a  Music theory question. Complete 10.", True, (255, 255, 255))
             self.screen.blit(inst_surf, (20, HEIGHT - 50))
@@ -173,8 +174,9 @@ class MusicMinigame:
 
             pygame.display.update()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)
 
-    def show_results_screen(self):
+    async def show_results_screen(self):
         running = True
 
         while running:
@@ -185,7 +187,7 @@ class MusicMinigame:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_ESCAPE):
-                        
+
                         #Add score to total score and move to next minigame or final results
                         self.game.total_score += self.score
 
@@ -199,7 +201,7 @@ class MusicMinigame:
                         else:
                             self.game.state = "final_results"
                         return
-            
+
             self.screen.blit(self.background, (0, 0))
 
             title = self.font_big.render("Music Minigame Complete!", True, (255,255,255))
@@ -213,3 +215,4 @@ class MusicMinigame:
 
             pygame.display.update()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)

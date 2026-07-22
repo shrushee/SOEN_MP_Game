@@ -1,4 +1,4 @@
-from tkinter import font
+import asyncio
 import pygame
 import random
 import sys
@@ -29,7 +29,7 @@ class EnglishMinigame:
         self.screen = game.screen
         self.clock = game.clock
         self.state = "playing"
-        self.background = pygame.image.load("assets/chalkboard.jpg").convert()
+        self.background = pygame.image.load("assets/chalkboard.png").convert()
         self.background = pygame.transform.scale(self.background, (WIDTH, HEIGHT))
 
         self.font_big = pygame.font.Font("assets/fonts/Chalk Board.otf", 60)
@@ -48,9 +48,9 @@ class EnglishMinigame:
             {
                 "question": "Which sentence is grammatically correct?",
                 "options": [
-                    "He don’t like apples.",
-                    "He doesn’t like apples.",
-                    "He didn’t liked apples.",
+                    "He don't like apples.",
+                    "He doesn't like apples.",
+                    "He didn't liked apples.",
                     "He not like apples."
                 ],
                 "answer": 2
@@ -71,7 +71,7 @@ class EnglishMinigame:
                     "There going to the movies.",
                     "They're house is very big.",
                     "Their dog is very friendly.",
-                    "They’re dog is barking."
+                    "They're dog is barking."
                 ],
                 "answer": 3
             },
@@ -147,7 +147,7 @@ class EnglishMinigame:
         else:
             self.current_question = self.questions[self.question_number]
 
-    def run(self):
+    async def run(self):
         running = True
 
         while running:
@@ -172,7 +172,7 @@ class EnglishMinigame:
                         self.next_question()
 
             if self.state == "results":
-                self.show_results_screen()
+                await self.show_results_screen()
                 self.game.minigame_cooldown = True
                 return
 
@@ -211,9 +211,10 @@ class EnglishMinigame:
 
             pygame.display.update()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)
 
 
-    def show_results_screen(self):
+    async def show_results_screen(self):
         running = True
 
         while running:
@@ -224,7 +225,7 @@ class EnglishMinigame:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_ESCAPE):
-                        
+
                         #Add score to total score and move to next minigame or final results
                         self.game.total_score += self.score
 
@@ -252,3 +253,4 @@ class EnglishMinigame:
 
             pygame.display.update()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)

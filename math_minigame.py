@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 from settings import *
 import random
@@ -10,7 +11,7 @@ class MathMinigame:
         self.clock = game.clock
         self.finished = False
         self.state = "playing"
-        self.background = pygame.image.load("assets/chalkboard.jpg").convert()
+        self.background = pygame.image.load("assets/chalkboard.png").convert()
         self.background = pygame.transform.scale(self.background, (WIDTH, HEIGHT))
 
         self.font_big = pygame.font.Font("assets/fonts/Chalk Board.otf", 70)
@@ -52,7 +53,7 @@ class MathMinigame:
             self.current_question = f"{a} / {b}"
             self.correct_answer = answer
 
-    def show_results_screen(self):
+    async def show_results_screen(self):
         running = True
 
         while running:
@@ -63,7 +64,7 @@ class MathMinigame:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_ESCAPE):
-                        
+
                         #Add score to total score and move to next minigame or final results
                         self.game.total_score += self.score
 
@@ -95,16 +96,17 @@ class MathMinigame:
 
             pygame.display.update()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)
 
-    def run(self):
+    async def run(self):
         running = True
 
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    sys.exit() 
-                
+                    sys.exit()
+
                 if event.type == pygame.KEYDOWN:
                     if event.key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_ESCAPE):
                         if self.question_number > self.total_questions:
@@ -141,12 +143,12 @@ class MathMinigame:
 
                             #Otherwise, generate next question
                             self.generate_question()
-                            
+
             if self.state == "results":
-                    self.show_results_screen()
+                    await self.show_results_screen()
                     self.game.minigame_cooldown = True
                     return
-        
+
             #background
             self.screen.blit(self.background, (0, 0))
 
@@ -173,8 +175,8 @@ class MathMinigame:
 
             pygame.display.update()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)
 
         #return to overworld
         self.game.state = "overworld"
         self.game.minigame_cooldown = False
-               

@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 import random
 import sys
@@ -30,7 +31,7 @@ class GeographyMinigame:
         self.state = "playing"
 
         # Chalkboard background
-        self.background = pygame.image.load("assets/chalkboard.jpg").convert()
+        self.background = pygame.image.load("assets/chalkboard.png").convert()
         self.background = pygame.transform.scale(self.background, (WIDTH, HEIGHT))
 
         # Chalk font
@@ -109,7 +110,7 @@ class GeographyMinigame:
         else:
             self.current_question = self.questions[self.question_number]
 
-    def run(self):
+    async def run(self):
         running = True
 
         while running:
@@ -134,7 +135,7 @@ class GeographyMinigame:
                         self.next_question()
 
             if self.state == "results":
-                self.show_results_screen()
+                await self.show_results_screen()
                 self.game.minigame_cooldown = True
                 return
 
@@ -173,8 +174,9 @@ class GeographyMinigame:
 
             pygame.display.update()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)
 
-    def show_results_screen(self):
+    async def show_results_screen(self):
         running = True
 
         while running:
@@ -185,7 +187,7 @@ class GeographyMinigame:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_ESCAPE):
-                        
+
                         #Add score to total score and move to next minigame or final results
                         self.game.total_score += self.score
 
@@ -213,3 +215,4 @@ class GeographyMinigame:
 
             pygame.display.update()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)

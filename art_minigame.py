@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 import random
 import sys
@@ -11,7 +12,7 @@ class ArtMinigame:
         self.state = "playing"
 
         # Chalkboard background
-        self.background = pygame.image.load("assets/chalkboard.jpg").convert()
+        self.background = pygame.image.load("assets/chalkboard.png").convert()
         self.background = pygame.transform.scale(self.background, (WIDTH, HEIGHT))
 
         # Chalk font
@@ -96,7 +97,7 @@ class ArtMinigame:
         else:
             self.current_question = self.questions[self.question_number]
 
-    def run(self):
+    async def run(self):
         running = True
 
         while running:
@@ -121,7 +122,7 @@ class ArtMinigame:
                         self.next_question()
 
             if self.state == "results":
-                self.show_results_screen()
+                await self.show_results_screen()
                 self.game.minigame_cooldown = True
                 return
 
@@ -154,8 +155,9 @@ class ArtMinigame:
 
             pygame.display.update()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)
 
-    def show_results_screen(self):
+    async def show_results_screen(self):
         running = True
 
         while running:
@@ -166,7 +168,7 @@ class ArtMinigame:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_ESCAPE):
-                        
+
                         #Add score to total score and move to next minigame or final results
                         self.game.total_score += self.score
 
@@ -194,10 +196,4 @@ class ArtMinigame:
 
             pygame.display.update()
             self.clock.tick(FPS)
-
-        self.game.total_score += self.score
-        self.game.current_minigame_index += 1
-        if self.game.current_minigame_index < len(self.game.minigames_to_play):
-            self.game.current_target_minigame = self.game.minigames_to_play[self.game.current_minigame_index]
-        else:
-            self.game.state = "final_results"
+            await asyncio.sleep(0)
