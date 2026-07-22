@@ -2,7 +2,6 @@ import pygame, sys
 import random
 from settings import *
 from level import Level
-from debug import debug
 from math_minigame import MathMinigame
 from english_minigame import EnglishMinigame
 from history_minigame import HistoryMinigame
