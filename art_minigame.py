@@ -140,13 +140,21 @@ class ArtMinigame:
             self.screen.blit(silhouette, (WIDTH//2 - 150, 120))
 
             # Draw options
-            for i, option in enumerate(self.current_question["options"], start=1):
-                opt_surf = self.font_small.render(f"{i}. {option}", True, (255,255,255))
-                self.screen.blit(opt_surf, (70, 450 + i * 50))
+            base_y = 400  # start higher up
+            line_spacing = 40  # consistent spacing between options
 
-            #draw instructions
-            inst_surf = self.font_small.render("Press 1, 2, 3 or 4 to guess a silhouette. Complete 10.", True, (255, 255, 255))
-            self.screen.blit(inst_surf, (20, HEIGHT - 50))
+            for i, option in enumerate(self.current_question["options"], start=1):
+                opt_surf = self.font_small.render(f"{i}. {option}", True, (255, 255, 255))
+                self.screen.blit(opt_surf, (70, base_y + (i - 1) * line_spacing))
+
+            # Draw instructions below the last option
+            last_option_y = base_y + len(self.current_question["options"]) * line_spacing
+            inst_surf = self.font_small.render(
+                "Press 1, 2, 3 or 4 to guess a silhouette. Complete 10.",
+                True,
+                (255, 255, 255)
+            )
+            self.screen.blit(inst_surf, (70, last_option_y + 30))
 
             # Draw feedback
             if self.feedback:
